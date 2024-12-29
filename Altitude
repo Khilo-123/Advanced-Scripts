@@ -1,0 +1,53 @@
+-- Instances:
+
+local AltitudeGui = Instance.new("ScreenGui")
+local AltitudeFrame = Instance.new("Frame")
+local UICornerAF = Instance.new("UICorner")
+local AltitudeText = Instance.new("TextLabel")
+local UICornerAT = Instance.new("UICorner")
+
+-- Properties:
+
+AltitudeGui.Name = "AltitudeGui"
+AltitudeGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+AltitudeGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+AltitudeFrame.Name = "AltitudeFrame"
+AltitudeFrame.Parent = AltitudeGui
+AltitudeFrame.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+AltitudeFrame.BorderSizePixel = 0
+AltitudeFrame.Position = UDim2.new(0.82, 0, 0.02, 0)
+AltitudeFrame.Size = UDim2.new(0, 172, 0, 32)
+
+UICornerAF.Parent = AltitudeFrame
+
+AltitudeText.Name = "AltitudeText"
+AltitudeText.Parent = AltitudeFrame
+AltitudeText.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+AltitudeText.BorderSizePixel = 0
+AltitudeText.Position = UDim2.new(0.017, 0, 0.094, 0)
+AltitudeText.Size = UDim2.new(0, 166, 0, 25)
+AltitudeText.Font = Enum.Font.Jura
+AltitudeText.Text = "ALTITUDE"
+AltitudeText.TextColor3 = Color3.fromRGB(255, 255, 255)
+AltitudeText.TextScaled = true
+AltitudeText.TextWrapped = true
+AltitudeText.TextXAlignment = Enum.TextXAlignment.Left
+
+UICornerAT.Parent = AltitudeText
+
+-- Local Variables:
+local plr = game.Players.LocalPlayer
+local runService = game:GetService("RunService")
+
+-- Function to read altitude:
+local function ReadAltitude()
+	local character = plr.Character
+	if character and character:FindFirstChild("HumanoidRootPart") then
+		local altitude = character.HumanoidRootPart.Position.Y
+		AltitudeText.Text = "Altitude: " .. math.floor(altitude)
+	end
+end
+
+-- Connect the function to RenderStepped:
+runService.RenderStepped:Connect(ReadAltitude)
