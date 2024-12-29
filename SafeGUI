@@ -1,0 +1,197 @@
+
+-- Instances:
+
+local SafeGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local UICornerMF = Instance.new("UICorner")
+local Title = Instance.new("TextLabel")
+local GotoBTN = Instance.new("TextButton")
+local ReturnBTN = Instance.new("TextButton")
+local CloseBTN = Instance.new("TextButton")
+local UICornerCB = Instance.new("UICorner")
+
+--Properties:
+
+SafeGui.Name = "SafeGui"
+SafeGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+SafeGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = SafeGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+MainFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+MainFrame.BorderSizePixel = 0
+MainFrame.Position = UDim2.new(0.356299222, 0, 0.3650904, 0)
+MainFrame.Size = UDim2.new(0, 291, 0, 155)
+
+UICornerMF.Name = "UICornerMF"
+UICornerMF.Parent = MainFrame
+
+Title.Name = "Title"
+Title.Parent = MainFrame
+Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title.BackgroundTransparency = 1.000
+Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Title.BorderSizePixel = 0
+Title.Size = UDim2.new(0, 291, 0, 52)
+Title.Font = Enum.Font.Jura
+Title.Text = "Safe GUI | V1"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextScaled = true
+Title.TextSize = 14.000
+Title.TextWrapped = true
+
+GotoBTN.Name = "GotoBTN"
+GotoBTN.Parent = MainFrame
+GotoBTN.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+GotoBTN.BorderColor3 = Color3.fromRGB(0, 0, 0)
+GotoBTN.BorderSizePixel = 0
+GotoBTN.Position = UDim2.new(0, 0, 0.335483879, 0)
+GotoBTN.Size = UDim2.new(0, 291, 0, 31)
+GotoBTN.Font = Enum.Font.Jura
+GotoBTN.Text = "Goto Safe zone"
+GotoBTN.TextColor3 = Color3.fromRGB(255, 255, 255)
+GotoBTN.TextScaled = true
+GotoBTN.TextSize = 14.000
+GotoBTN.TextWrapped = true
+
+ReturnBTN.Name = "ReturnBTN"
+ReturnBTN.Parent = MainFrame
+ReturnBTN.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ReturnBTN.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ReturnBTN.BorderSizePixel = 0
+ReturnBTN.Position = UDim2.new(0, 0, 0.580645144, 0)
+ReturnBTN.Size = UDim2.new(0, 291, 0, 31)
+ReturnBTN.Font = Enum.Font.Jura
+ReturnBTN.Text = "Return"
+ReturnBTN.TextColor3 = Color3.fromRGB(255, 255, 255)
+ReturnBTN.TextScaled = true
+ReturnBTN.TextSize = 14.000
+ReturnBTN.TextWrapped = true
+
+CloseBTN.Name = "CloseBTN"
+CloseBTN.Parent = MainFrame
+CloseBTN.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+CloseBTN.BorderColor3 = Color3.fromRGB(0, 0, 0)
+CloseBTN.BorderSizePixel = 0
+CloseBTN.Position = UDim2.new(0, 0, 0.845161319, 0)
+CloseBTN.Size = UDim2.new(0, 291, 0, 24)
+CloseBTN.Font = Enum.Font.Jura
+CloseBTN.Text = "Close"
+CloseBTN.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBTN.TextScaled = true
+CloseBTN.TextSize = 14.000
+CloseBTN.TextWrapped = true
+
+UICornerCB.Name = "UICornerCB"
+UICornerCB.Parent = CloseBTN
+
+local ZonePositionTargeted = Vector3.new(5000,5000,5000)
+
+local GotoPos
+local LastPos
+
+local plr = game:GetService("Players").LocalPlayer
+local char = plr.Character
+
+local function Goto()
+	if char then
+		local root = char:FindFirstChild("HumanoidRootPart")
+		if root then
+			if GotoPos then
+				root.CFrame = CFrame.new(GotoPos)
+			end
+		end
+	end
+end
+
+local function SetLastPos()
+	if char then
+		local root = char:FindFirstChild("HumanoidRootPart")
+		if root then
+			LastPos = root.Position
+		end
+	end
+end
+
+local function AddProp()
+	if workspace:FindFirstChild("SafeGuiPROP") then
+		warn("AlreadyExecuted!")
+		
+	else
+		local SafeGuiPROP = Instance.new("Folder", workspace)
+		SafeGuiPROP.Name = "SafeGuiPROP"
+		
+	end
+end
+
+local function GotoLastPos()
+	if char then
+		local root = char:FindFirstChild("HumanoidRootPart")
+		if root then
+			if LastPos then
+				root.CFrame = CFrame.new(LastPos)
+			end
+		end
+	end
+	
+end
+
+local function AddZone()
+	local Prop = workspace:FindFirstChild("SafeGuiPROP")
+	
+	if Prop then
+		
+		if Prop:FindFirstChild("ZonePart") and Prop:FindFirstChild("GotoPart") then
+			
+		else
+			local ZonePart = Instance.new("Part", Prop)
+			ZonePart.Size = Vector3.new(50,0.5,50)
+			ZonePart.Anchored = true
+			ZonePart.Position = ZonePositionTargeted - Vector3.new(0,20,0)
+			
+			local GotoPart = Instance.new("Part", Prop)
+			GotoPart.Name = "GotoPart"
+			GotoPart.Anchored = true
+			GotoPart.Size = Vector3.new(2,1,2)
+			GotoPart.CanCollide = false
+			GotoPart.Position = ZonePositionTargeted
+			GotoPos = ZonePositionTargeted
+		end
+	end
+end
+
+local FullyExecuted = false
+
+local function Execute()
+	AddProp()
+	FullyExecuted = false
+	wait(1)
+	FullyExecuted = true
+	AddZone()
+end
+
+Execute()
+
+CloseBTN.MouseButton1Click:Connect(function()
+	SafeGui:Destroy()
+	local Prop = workspace:FindFirstChild("SafeGuiPROP")
+	
+	if Prop then
+		Prop:Destroy()
+	end
+end)
+
+GotoBTN.MouseButton1Click:Connect(function()
+	SetLastPos()
+	wait(0.1)
+	Goto()
+end)
+
+ReturnBTN.MouseButton1Click:Connect(function()
+	GotoLastPos()
+end)
+
+MainFrame.Draggable = true
+MainFrame.Active = true
+MainFrame.Selectable = true
